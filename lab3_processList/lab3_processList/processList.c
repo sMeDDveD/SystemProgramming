@@ -18,7 +18,7 @@ BOOL GetProcessList(PCHAR aFileName)
 	
 	if (hProcessSnap == INVALID_HANDLE_VALUE)
 	{
-		GetError("CreateToolhelp32Snapshot (для процессов)");
+		GetError("CreateToolhelp32Snapshot (Г¤Г«Гї ГЇГ°Г®Г¶ГҐГ±Г±Г®Гў)");
 		return FALSE;
 	}
 
@@ -36,17 +36,17 @@ BOOL GetProcessList(PCHAR aFileName)
 	for(;Process32Next(hProcessSnap, &processE32);)
 	{
 		fprintf(output, "\n===================================================");
-		fprintf(output, "\nИмя процесса:  %s", processE32.szExeFile);
+		fprintf(output, "\nГ€Г¬Гї ГЇГ°Г®Г¶ГҐГ±Г±Г :  %s", processE32.szExeFile);
 		fprintf(output, "\n===================================================");
 
 		DWORD dwPriorityClass = GetPriority(processE32.th32ProcessID);
 
 		fprintf(output, "\n  PID           = 0x%08X", processE32.th32ProcessID);
 		fprintf(output, "\n  Parent PID    = 0x%08X", processE32.th32ParentProcessID);
-		fprintf(output, "\n  Число потоков = %d", processE32.cntThreads);
-		fprintf(output, "\n  Приоритет     = %d", processE32.pcPriClassBase);
+		fprintf(output, "\n  Г—ГЁГ±Г«Г® ГЇГ®ГІГ®ГЄГ®Гў = %d", processE32.cntThreads);
+		fprintf(output, "\n  ГЏГ°ГЁГ®Г°ГЁГІГҐГІ     = %d", processE32.pcPriClassBase);
 		if (dwPriorityClass)
-			fprintf(output, "\n  Класс приоритета = %d", dwPriorityClass);
+			fprintf(output, "\n  ГЉГ«Г Г±Г± ГЇГ°ГЁГ®Г°ГЁГІГҐГІГ  = %d", dwPriorityClass);
 
 		GetModulesList(processE32.th32ProcessID);
 		GetThreadsList(processE32.th32ProcessID);
@@ -69,7 +69,7 @@ BOOL GetModulesList(DWORD dwPID)
 	hModuleSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, dwPID);
 	if (hModuleSnap == INVALID_HANDLE_VALUE)
 	{
-		GetError("CreateToolhelp32Snapshot (для модулей)");
+		GetError("CreateToolhelp32Snapshot (Г¤Г«Гї Г¬Г®Г¤ГіГ«ГҐГ©)");
 		return FALSE;
 	}
 
@@ -87,14 +87,14 @@ BOOL GetModulesList(DWORD dwPID)
 	fprintf(output, "\n---------------------------------------------------");
 	for (; Module32Next(hModuleSnap, &moduleE32); cntModules++) 
 	{
-		fprintf(output, "\n     Имя модуля:     %s", moduleE32.szModule);
-		fprintf(output, "\n     Путь к модулю = %s", moduleE32.szExePath);
+		fprintf(output, "\n     Г€Г¬Гї Г¬Г®Г¤ГіГ«Гї:     %s", moduleE32.szModule);
+		fprintf(output, "\n     ГЏГіГІГј ГЄ Г¬Г®Г¤ГіГ«Гѕ = %s", moduleE32.szExePath);
 		fprintf(output, "\n     PID           = 0x%08X", moduleE32.th32ProcessID);
-		fprintf(output, "\n     Размер модуля = %d", moduleE32.modBaseSize);
+		fprintf(output, "\n     ГђГ Г§Г¬ГҐГ° Г¬Г®Г¤ГіГ«Гї = %d", moduleE32.modBaseSize);
 	}
 	fprintf(output, "\n---------------------------------------------------\n");
 
-	fprintf(output, "\n     Число модулей = %d\n", cntModules);
+	fprintf(output, "\n     Г—ГЁГ±Г«Г® Г¬Г®Г¤ГіГ«ГҐГ© = %d\n", cntModules);
 
 	CloseHandle(hModuleSnap);
 	return TRUE;
@@ -123,8 +123,8 @@ BOOL GetThreadsList(DWORD dwOwnerPID)
 	{
 		if (threadE32.th32OwnerProcessID == dwOwnerPID)
 		{
-			fprintf(output, "\n     ID потока     = 0x%08X", threadE32.th32ThreadID);
-			fprintf(output, "\n     Приоритет     = %d", threadE32.tpBasePri);
+			fprintf(output, "\n     ID ГЇГ®ГІГ®ГЄГ      = 0x%08X", threadE32.th32ThreadID);
+			fprintf(output, "\n     ГЏГ°ГЁГ®Г°ГЁГІГҐГІ     = %d", threadE32.tpBasePri);
 		}
 	}
 	fprintf(output, "\n---------------------------------------------------\n");
@@ -146,7 +146,7 @@ void GetError(PCHAR msg)
 
 	message[lstrlen(message) - 2] = '\0';
 
-	fprintf(output, "\n  WARNING: %s завершилась с ошибкой %d (%s)", msg, e, message);
+	fprintf(output, "\n  WARNING: %s Г§Г ГўГҐГ°ГёС„РІС‹Г«Г Г±Гј Г± Г®ГёГЁГЎГЄГ®Г© %d (%s)", msg, e, message);
 }
 
 DWORD GetPriority(DWORD processID) 
