@@ -6,7 +6,13 @@ Cоздание и использование DLL
 BOOLEAN GetAuthor(LPSTR buffer, DWORD dwBufferSize, DWORD* pdwBytesWritten); // автор плагина
 BOOLEAN GetDescription(LPSTR buffer, DWORD dwBufferSize, DWORD* pdwBytesWritten); // описание
 плагина
+<<<<<<< HEAD
 VOID Execute(); // произвольное действие.
+=======
+VOID Execute(); // произвольное действие. Желательно вывод какой-нибудь системной информации,
+например число разделов на жестком диске, количество и тип процессоров, присутствуют ли в
+системе cd/dvd …
+>>>>>>> 622c4437213acf673c82fe26f6ce466bc730a571
 ```
 Функции экспортируются из библиотеки по соглашению ```stdcall```. Плагины находятся в каталоге ```Plugins```,
 расположенном в каталоге с программой
